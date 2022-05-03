@@ -1,8 +1,48 @@
 document
-  .querySelector("#lista_paises")
-  .addEventListener("change", traerInfoPaises);
+  .getElementById("list_countries")
+  .addEventListener("click", showCountries);
 let baseUrl = "https://restcountries.com/v3.1/";
-traerPaises();
+
+function showCountries() {
+  document.getElementById("mostrarApi").innerHTML = "";
+  console.log("hola");
+
+  document.getElementById("mostrarApi").innerHTML = `
+    <div class="row">
+      <div class="col-10 text-center mx-auto">
+        <h1>
+          Select a country
+        </h1>
+        <form action="">
+          <select name="" id="lista_paises" class="form-control">
+            <option value="">Select one</option>
+          </select>
+        </form>
+      </div>
+      <div class="col-12 text-center">
+        <h2>Countries</h2>
+        <table class="table table-striped">
+          <thead>
+            <th>Alpha code</th>
+            <th>Name</th>
+            <th>Capital</th>
+            <th>Region</th>
+            <th>Population</th>
+            <th>Flag</th>
+          </thead>
+          <tbody id="contenido2">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  document
+    .querySelector("#lista_paises")
+    .addEventListener("change", traerInfoPaises);
+  traerPaises();
+}
 
 function traerPaises() {
   fetch(baseUrl + "all")
@@ -39,7 +79,7 @@ function traerInfoPaises() {
         </tr>
       `;
       });
-      document.getElementById("contenido").innerHTML += body;
+      document.getElementById("contenido2").innerHTML += body;
     })
     .catch((error) => console.log(error));
 }

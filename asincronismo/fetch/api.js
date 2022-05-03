@@ -1,6 +1,8 @@
 document.getElementById("api").addEventListener("click", ajax);
 
 function ajax() {
+  document.getElementById("mostrarApi").innerHTML = "";
+
   const url = "https://restcountries.com/v3.1/all";
 
   fetch(url)
