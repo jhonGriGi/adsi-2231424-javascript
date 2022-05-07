@@ -3,7 +3,7 @@ import PicContainer from "./picsum/components/PicContainer";
 
 const RenderApp = () => {
   document.querySelector("#app").innerHTML = `
-  <section class="container-fluid text-centerr">
+  <section class="container-fluid text-center">
         <button class="btn btn-info" id="picsum">Picsum</button>
         <button class="btn btn-info" id="TRM">TRM Api</button>
     <div id="container" ></div>

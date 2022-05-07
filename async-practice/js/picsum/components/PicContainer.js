@@ -1,10 +1,7 @@
-import Cards from "./cards";
 import Form from "./Form";
 
-const PicContainer =  () => {
-  console.log('hola');
+const PicContainer = () => {
   Form();
-  // Cards();
-}
+};
 
 export default PicContainer;
