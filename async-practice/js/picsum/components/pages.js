@@ -12,6 +12,5 @@ const PagesCounterLayout = () => {
 
 export const setNumPages = (num) => {
   numPages = Math.ceil(1000 / num);
-  console.log(numPages);
   PagesCounterLayout();
 };
