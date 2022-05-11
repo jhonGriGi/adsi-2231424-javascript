@@ -1,5 +1,7 @@
 import getDataTRM from "../api/api";
 
+let actualPrice = 0;
+
 const calculatorLayout = () => {
   document.getElementById("container").innerHTML += `
     <section class="container mt-3">
@@ -15,69 +17,65 @@ const calculatorLayout = () => {
             <input type="radio" id="cop-to-dolar" name="convert" value="toDolar" class="form-check-input ml-1">
           </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group offset-3 row">
           <label for="from" class="col-1 text-end">From:</label>
-          <div class="col-3">
+          <div class="col-4">
             <input type="text" id="from" class="form-control" name="from">
           </div>
-
            <div class="col-3">
-          <input type="submit" class="btn btn-info">
-        </div>
-        <div class="form-group row">
-          <p ><span id="result"></span></p>
-        </div>
+          <input type="submit" id="submit-button" class="btn btn-info">
         </div>
       </form>
+    </section>
+    <section id="result-layout" class="rounded shadow col-4 offset-4 mt-3 p-3">
     </section>
   `;
 }
 
 const resultLayout = async () => {
-  // const dates = new Date();
-  // const data = await getDataTRM();
-  // const filter = Object.entries(data).reduce((acc, el) => {
-  //   let date = new Date(el.vigenciadesde);
-  //   if ((dates.getDate - 7) <= date) {
-  //     acc[el] = el;
-  //   }
-  //   return acc;
-  // }, {});
-  // data.map(coin => console.log(coin.vigenciadesde));
-  // console.log(data);
-  // console.log(filter);
+  const actualPrice = await getActualPrice();
+  document.getElementById("result-layout").innerHTML += `
+    <h3>Precio actual: <span>${actualPrice}</span></h3>
+    <p><i>El dinero que usted posee hasta el momento sera calculado en base al precio actual</i></p>
+    <h5>Resultado de la operacion: </h5>
+    <span id="result"></span>
+  `;
+}
+
+const getActualPrice = async () => {
   const data = await getDataTRM();
-  let times = [];
-  const getTime = new Date();
-  const thisWeek = getTime.getDate() - 30;
+  console.log(data);
+  actualPrice = data[0].valor;
+}
 
-  data.map((coin, index) => {
-    let date = coin.vigenciadesde.split("T");
-    if (date[0] == thisWeek) {
-      times[index] = date[0];
-    }
-  })
-  console.log(times)
-  console.log(data)
-
+const getFormat = (number, currency) => {
+  return new Intl.NumberFormat('en-in', { style: 'currency', currency: currency, minimumFractionDigits: 2 }).format(number);
 }
 
 const calculatorLogic = (event) => {
+  // document.getElementById("submit-button").addEventListener("click", (ev) => {
+  //   ev.preventDefault();
+  //   ev.stopPropagation();
+  //   ev.stopImmediatePropagation();
+  // });
   event.preventDefault();
+  // event.stopImmediatePropagation();
   let fromMoney = event.target.from.value;
   let typeConvert = event.target.convert.value;
   let result = 0;
+  let currency;
 
   if (typeConvert === "toCop") {
-    result = (parseInt(fromMoney) * 4000);
+    result = (parseInt(fromMoney) * parseInt(actualPrice));
+    currency = getFormat(result, 'COP');
   }
 
   if (typeConvert === "toDolar") {
-    result = (parseInt(fromMoney) / 4000);
+    result = (parseInt(fromMoney) / parseInt(actualPrice));
+    currency = getFormat(result, "USD");
   }
 
-  console.log(`${typeConvert} result -> ${result}`);
-  document.getElementById('result').innerHTML += result;
+  document.getElementById('result').innerHTML = currency;
 }
 
 const Calculator = () => {

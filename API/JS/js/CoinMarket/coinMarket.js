@@ -34,15 +34,6 @@ const fillTable = async () => {
     </tr>
   `;
   })
-  // document.getElementById("table-content").innerHTML += `
-  //   <tr>
-  //     <td><img src="${data.Data[0].CoinInfo.ImageUrl}"></td>
-  //     <td>${data.Data[0].CoinInfo.Id}</td>
-  //     <td>${data.Data[0].CoinInfo.Name}</td>
-  //     <td>${data.Data[0].CoinInfo.FullName}</td>
-  //     <td>${data.Data[0].CoinInfo.Internal}</td>
-  //   </tr>
-  // `;
   document.getElementById("table-content").innerHTML += layout;
   console.log(data.Data[0].CoinInfo.Id);
 };

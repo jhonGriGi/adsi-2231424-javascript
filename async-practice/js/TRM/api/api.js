@@ -1,4 +1,4 @@
-const baseUrl = "https://www.datos.gov.co/resource/ceyp-9c7c.json";
+const baseUrl = "https://www.datos.gov.co/resource/dit9-nnvp.json";
 
 const getDataTRM = async () => {
   try {
