@@ -1,5 +1,6 @@
 import "../style.css";
 import PicContainer from "./picsum/components/PicContainer";
+import TRMContainer from "./TRM/components/TRMContainer";
 
 const RenderApp = () => {
   document.querySelector("#app").innerHTML = `
@@ -12,8 +13,7 @@ const RenderApp = () => {
 
   document.getElementById("picsum").addEventListener("click", PicContainer);
 
-  // document.getElementById('TRM')
-  //   .addEventListener('click', TrmContainer);
+  document.getElementById("TRM").addEventListener("click", TRMContainer);
 };
 
 window.onload = RenderApp;
