@@ -1,7 +1,5 @@
 import getDataTRM from "../api/api";
 
-let actualPrice = 0;
-
 const calculatorLayout = () => {
   document.getElementById("container").innerHTML += `
     <section class="container mt-3">
@@ -44,26 +42,20 @@ const resultLayout = async () => {
 
 const getActualPrice = async () => {
   const data = await getDataTRM();
-  console.log(data);
-  actualPrice = data[0].valor;
+  return data[0].valor;
 }
 
 const getFormat = (number, currency) => {
   return new Intl.NumberFormat('en-in', { style: 'currency', currency: currency, minimumFractionDigits: 2 }).format(number);
 }
 
-const calculatorLogic = (event) => {
-  // document.getElementById("submit-button").addEventListener("click", (ev) => {
-  //   ev.preventDefault();
-  //   ev.stopPropagation();
-  //   ev.stopImmediatePropagation();
-  // });
+const calculatorLogic = async (event) => {
   event.preventDefault();
-  // event.stopImmediatePropagation();
   let fromMoney = event.target.from.value;
   let typeConvert = event.target.convert.value;
   let result = 0;
   let currency;
+  let actualPrice = await getActualPrice();
 
   if (typeConvert === "toCop") {
     result = (parseInt(fromMoney) * parseInt(actualPrice));
